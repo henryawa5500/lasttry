@@ -1,0 +1,110 @@
+<?php
+$split_input_array = array();
+
+$sorted_array = array();
+
+if(isset($_POST['submit_btn']))
+{
+     $search_input = $_POST['search'];
+
+     $split_input_array = explode(',', $search_input );
+
+     $array_length = count($split_input_array)-1;
+
+     for($i=0; $i<=$array_length; $i++)
+     {
+        if($i == 0)
+        {
+            #insert the first element of the unsorted array i.e sorted_array
+            # into the sorted array.
+            $sorted_array[] = $split_input_array[$i];
+        }else{
+
+            $sorted_array_length = count($sorted_array)-1;
+
+            $checker = 0;
+
+            for($j = 0; $j <= $sorted_array_length; $j++)
+            {
+                if($split_input_array[$i] < $sorted_array[$j])
+                {
+                    if($checker == 0){
+
+                        array_splice($sorted_array, $j, 0, $split_input_array[$i]);
+
+                        $checker++;
+                    }      
+                } 
+
+                if($j == $sorted_array_length){
+
+                    if($checker == 0){
+
+                        $x = $j + 1;
+
+                        array_splice($sorted_array, $x, 0, $split_input_array[$i]);
+
+                        $checker++;
+                    }  
+                }
+
+              
+              
+            }
+        }
+        
+     }
+
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEN206</title>
+    <!-- jQuery CSS -->
+      <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- jQuery Script -->
+    <script src="dist/js/bootstrap.js"></script>
+</head>
+<body>
+<div class="main">
+    <div class="container">
+
+            <form class="form" method="POST">
+                <div class="row">
+                    <div class="col-md-11">
+                        <input type="text" name="search" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Search ..." >
+                    </div>
+                    <div class="col-md-1" >
+                        <button type="submit" name="submit_btn" class="btn btn-primary mb-2">Submit</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="row">
+                <div class="col-md-12" style="height:100px;" >
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mt-20" style="background-color: #ddd; min-height:500px;">
+                    <h2>Input: Unsorted Array</h2>
+                    <div> <?php if(count($split_input_array) > 0){ print_r($split_input_array); }  ?> </div>
+
+                </div>
+                <div class="col-md-6 mt-20" style="background-color: #aaa; min-height:500px;" >
+                    <h2>Output: Sorted Array</h2>
+                    <div> <?php if(count($sorted_array) > 0){ print_r($sorted_array); }  ?> </div>
+                </div>
+            </div>
+
+    </div>
+</div>
+
+</body>
+</html>

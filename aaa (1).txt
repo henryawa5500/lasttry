@@ -1,0 +1,99 @@
+<?php
+$split_input_array = array();
+
+$sorted_array = array();
+
+if(isset($_POST['submit_btn']))
+{
+     $search_input = $_POST['search'];
+
+     $split_input_array = explode(',', $search_input );
+
+     $array_length = count($split_input_array)-1;
+
+     for($i=0; $i<=$array_length; $i++)
+     {
+        if($i == 0)
+        {
+            #insert the first element of the unsorted array i.e sorted_array
+            # into the sorted array.
+            $sorted_array[] = $split_input_array[$i];
+        }else{
+
+            $sorted_array_length = count($sorted_array)-1;
+
+            $checker = 0;
+
+            for($j = 0; $j <= $sorted_array_length; $j++)
+            {
+                if($split_input_array[$i] < $sorted_array[$j])
+                {
+                    if($checker == 0){
+
+                        array_splice($sorted_array, $j, 0, $split_input_array[$i]);
+
+                        $checker++;
+                    }      
+                } 
+
+                if($j == $sorted_array_length){
+
+                    if($checker == 0){
+
+                        $x = $j + 1;
+
+                        array_splice($sorted_array, $x, 0, $split_input_array[$i]);
+
+                        $checker++;
+                    }  
+                }
+
+              
+              
+            }
+        }
+        
+     }
+
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <script src="/js/bootstrap.js"></script>
+</head>
+<body>
+    <div align="center">
+        <h1 style="color: black">Search Bar</h1>
+        <form method="post">
+
+            <input style="width: 40%; border: 2px solid purple;" type="search" name="search" placeholder="search...">
+        <button type="submit" name="submit_btn" style="background-color: rgb(146, 80, 207); color: black; border: 2px solid black;">Submit</button>
+        </form>
+    </div>
+    <div>
+        <div class="container">
+            <div class="row" style="height: 20lh;">
+                <div class="col-md-6 bg-primary" style="margin-top: 20px";>
+                <h2>Unsorted Array</h2>
+                <div><?php 
+                        if(count($split_input_array) > 0) {print_r($split_input_array);}
+                    ?>
+                </div>
+                </div>
+                <div class="col-md-6 bg-success" style="margin-top: 20px;">
+                <h2> Sorted Array</h2>
+                <div><?php if(count($sorted_array) > 0){ print_r($sorted_array); }  ?></div>
+            </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
